@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيد سعيد</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* لجعل الجسم يأخذ ارتفاع الشاشة بالكامل */
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #4a91d4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border-radius: 15px;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            font-size: 5vw; /* حجم الخط يتناسب مع عرض الشاشة */
+            color: #964ad4;
+            font-weight: bold;
+            white-space: nowrap; /* لمنع النص من الانتقال لسطر جديد */
+        }
+        .modal.show {
+            opacity: 1;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff0;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        /* تأثير التأرجح للكعكة */
+        .cake {
+            font-size: 8vw; /* حجم الكعكة */
+            display: block; /* لجعلها في سطر جديد */
+            margin-top: 20px; /* مسافة بين النص والكعكة */
+            animation: swing 2s ease-in-out infinite;
+        }
+        @keyframes swing {
+            0%, 100% { transform: rotate(-15deg); }
+            50% { transform: rotate(15deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <button id="clickMeButton" onclick="showMessage()">click me</button>
+
+    <div id="messageModal" class="modal">
+        🎉🎊 كل سنة وأنت طيب يا أخويااا 🎊🎉
+        <!-- الكعكة أسفل النص مباشرة -->
+        <span class="cake">🎂</span>
+    </div>
+
+    <script>
+        function showMessage() {
+            const button = document.getElementById('clickMeButton');
+            const modal = document.getElementById('messageModal');
+
+            // إخفاء الزر
+            button.style.opacity = '0';
+            setTimeout(() => button.style.display = 'none', 500); // الانتظار حتى يكتمل تأثير التلاشي
+
+            // إظهار النافذة
+            modal.style.display = 'block';
+            setTimeout(() => modal.classList.add('show'), 10); // تأخير بسيط لبدء الانتقال
+
+            // إنشاء تأثير رمي ورق عيد الميلاد
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.backgroundColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+                document.body.appendChild(confetti);
+            }
+
+            // إزالة قطع الورق بعد 5 ثواني
+            setTimeout(() => {
+                const confettiElements = document.querySelectorAll('.confetti');
+                confettiElements.forEach(el => el.remove());
+            }, 5000);
+        }
+    </script>
+
+</body>
+</html>
